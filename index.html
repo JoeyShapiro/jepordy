@@ -67,7 +67,13 @@
                 cards.forEach(function (c) {
                     c.classList.remove('active');
                 });
+
                 card.classList.add('active');
+                const category = document.getElementById('category');
+                const question = document.getElementById('question');
+
+                category.textContent = `${card.parentElement.firstChild.textContent} for ${card.firstChild.textContent}`;
+                question.textContent = "question";
             });
         });
     });
@@ -79,8 +85,16 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 
-    <div id="table" class="row row-md-5 d-flex align-self-stretch" style="width: 50rem;">
+    <div class="d-flex">
+        <div id="table" class="row row-md-5 d-flex align-self-stretch" style="width: 50rem;">
 
+        </div>
+        <div class="card acrylic shadow p-3 m-3" style="width: 50rem;">
+            <div class="card-body">
+                <h2 id="category" class="card-title"></h2>
+                <h5 id="question" class="card-text"></h5>
+            </div>
+        </div>
     </div>
 
 </body>
