@@ -70,6 +70,50 @@
 </style>
 
 <script>
+    class Game {
+        constructor(title) {
+            this.title = title;
+            this.categories = [];
+        }
+
+        addCategory(category) {
+            this.categories.push(category);
+        }
+
+        static template() {
+            let game = new Game('');
+
+            let category = new Category('');
+            category.addQuestion(100, 'question');
+            category.addQuestion(200, 'question');
+            category.addQuestion(400, 'question');
+            category.addQuestion(800, 'question');
+            category.addQuestion(1000, 'question');
+
+            game.addCategory(category);
+            game.addCategory(category);
+            game.addCategory(category);
+            game.addCategory(category);
+            game.addCategory(category);
+
+            return game;
+        }
+    }
+
+    class Category {
+        constructor(title) {
+            this.title = title;
+            this.questions = {};
+        }
+
+        addQuestion(amount, question) {
+            this.questions[amount] = question;
+        }
+    }
+
+    // want to use a json file to store the data, but this is testable, and will happen either way
+    const data = Game.template();
+
     const amounts = [ 200, 400, 600, 800, 1000 ];
     let cats = [ 'cat1', 'cat2', 'cat3', 'cat4', 'cat5' ];
 
@@ -134,13 +178,23 @@
             });
         });
     });
+
+    function downloadObjectAsJson(){
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 4));
+        var downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href",     dataStr);
+        downloadAnchorNode.setAttribute("download", "jepoordy-template.json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
 </script>
 
 <body class="" style="height: 100vh;">
     <div class="d-flex justify-content-center">
         <h1 class="h1">{{ jepordy name }}</h1>
         <div class="m-3">
-            <button class="shadow btn rounded btn-toggle border-0">
+            <button onclick="downloadObjectAsJson()" class="shadow btn rounded btn-toggle border-0">
                 <img src="download-svgrepo-com.svg" alt="download" style="width: 2rem;">
             </button>
             <button class="shadow btn rounded btn-toggle border-0">
