@@ -80,6 +80,10 @@
             this.categories.push(category);
         }
 
+        static from(json){
+            return Object.assign(new Game(), json);
+        }
+
         static template() {
             let game = new Game('Sample Game');
 
@@ -116,7 +120,7 @@
     }
 
     // want to use a json file to store the data, but this is testable, and will happen either way
-    const data = Game.template();
+    var data = Game.template();
 
     // add 5 cols to the table
     document.addEventListener('DOMContentLoaded', function () {
@@ -134,7 +138,6 @@
             col.appendChild(colTitle);
 
             Object.entries(cat.questions).forEach(function ( [amount, question] ) {
-                console.log(question);
                 var card = document.createElement('div');
                 card.classList.add('card', 'acrylic', 'shadow', 'mb-3');
                 card.style.height = '20%';
@@ -188,6 +191,33 @@
                 flipCard.style.transform = flipped ? 'rotateY(360deg)' : 'rotateY(0deg)';
             });
         });
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        let content = JSON.parse(e.target.result);
+                        try {
+                            data = Game.from(content);
+                        } catch (e) {
+                            alert('Error parsing JSON:', e);
+                        }
+                    } catch (e) {
+                        alert('Error parsing file:', e);
+                    } finally {
+                        window.location.reload();
+                    }
+                };
+                
+                reader.onerror = function(e) {
+                    alert("Error reading file: " + e.target.error);
+                };
+
+                reader.readAsText(file);
+            }
+        });
     });
 
     function downloadObjectAsJson(){
@@ -208,7 +238,8 @@
             <button onclick="downloadObjectAsJson()" class="shadow btn rounded btn-toggle border-0">
                 <img src="download-svgrepo-com.svg" alt="download" style="width: 2rem;">
             </button>
-            <button class="shadow btn rounded btn-toggle border-0">
+            <input type="file" id="fileInput" style="display: none;">
+            <button onclick="document.getElementById('fileInput').click()" class="shadow btn rounded btn-toggle border-0">
                 <img src="upload-svgrepo-com.svg" alt="import" style="width: 2rem;">
             </button>
         </div>

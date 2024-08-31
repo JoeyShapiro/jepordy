@@ -1,0 +1,55 @@
+{
+    "title": "My Game",
+    "categories": [
+        {
+            "title": "sports",
+            "questions": {
+                "100": "question 1",
+                "200": "question 2",
+                "400": "question 3",
+                "800": "question 4",
+                "1000": "question 5"
+            }
+        },
+        {
+            "title": "games",
+            "questions": {
+                "100": "question 1",
+                "200": "question 2",
+                "400": "question 3",
+                "800": "question 4",
+                "1000": "question 5"
+            }
+        },
+        {
+            "title": "art",
+            "questions": {
+                "100": "question 1",
+                "200": "question 2",
+                "400": "question 3",
+                "800": "question 4",
+                "1000": "question 5"
+            }
+        },
+        {
+            "title": "history",
+            "questions": {
+                "100": "question 1",
+                "200": "question 2",
+                "400": "question 3",
+                "800": "question 4",
+                "1000": "question 5"
+            }
+        },
+        {
+            "title": "science",
+            "questions": {
+                "100": "question 1",
+                "200": "question 2",
+                "400": "question 3",
+                "800": "question 4",
+                "1000": "question 5"
+            }
+        }
+    ]
+}
