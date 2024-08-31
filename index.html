@@ -208,10 +208,8 @@
     // populate the table with the data
     document.addEventListener('DOMContentLoaded', function () {
         loadGame();
-    });
 
-    // when a card is clicked, add the active class
-    document.addEventListener('DOMContentLoaded', function () {
+        // when a card is clicked, add the active class
         document.getElementById('fileInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -236,6 +234,9 @@
                 };
 
                 reader.readAsText(file);
+
+                // clear the input
+                event.target.value = null; // good for new load and clenliness
             }
         });
     });
