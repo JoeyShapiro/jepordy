@@ -192,6 +192,17 @@
                 flipCard.style.transform = flipped ? 'rotateY(360deg)' : 'rotateY(0deg)';
             });
         });
+
+        // clear the card
+        const category = document.getElementById('category');
+        const question = document.getElementById('question');
+
+        // kinda gross, but could be worse
+        category.textContent = '';
+        question.textContent = '';
+
+        const flipCard = document.querySelector('.flip-card-inner');
+        flipCard.style.transform = 'rotateY(0deg)';
     }
 
     // populate the table with the data
