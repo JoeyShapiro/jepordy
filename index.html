@@ -83,17 +83,21 @@
         static template() {
             let game = new Game('Sample Game');
 
-            let category = new Category('category');
-            category.addQuestion(100, 'question');
-            category.addQuestion(200, 'question');
-            category.addQuestion(400, 'question');
-            category.addQuestion(800, 'question');
-            category.addQuestion(1000, 'question');
+            let category = new Category('category 1');
+            category.addQuestion(100, 'question 1');
+            category.addQuestion(200, 'question 2');
+            category.addQuestion(400, 'question 3');
+            category.addQuestion(800, 'question 4');
+            category.addQuestion(1000, 'question 5');
 
             game.addCategory(category);
+            category.title = 'category 2';
             game.addCategory(category);
+            category.title = 'category 3';
             game.addCategory(category);
+            category.title = 'category 4';
             game.addCategory(category);
+            category.title = 'category 5';
             game.addCategory(category);
 
             return game;
