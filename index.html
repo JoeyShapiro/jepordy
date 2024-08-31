@@ -81,9 +81,9 @@
         }
 
         static template() {
-            let game = new Game('');
+            let game = new Game('Sample Game');
 
-            let category = new Category('');
+            let category = new Category('category');
             category.addQuestion(100, 'question');
             category.addQuestion(200, 'question');
             category.addQuestion(400, 'question');
@@ -114,23 +114,23 @@
     // want to use a json file to store the data, but this is testable, and will happen either way
     const data = Game.template();
 
-    const amounts = [ 200, 400, 600, 800, 1000 ];
-    let cats = [ 'cat1', 'cat2', 'cat3', 'cat4', 'cat5' ];
-
     // add 5 cols to the table
     document.addEventListener('DOMContentLoaded', function () {
+        const title = document.getElementById('title');
+        title.textContent = data.title;
+
         var table = document.getElementById('table');
-        cats.forEach(function (cat) {
+        data.categories.forEach(function (cat) {
             var col = document.createElement('div');
             col.classList.add('col', 'p-3', 'align-self-stretch');
             table.appendChild(col);
             
-            let colTitle = document.createElement('h2');
-            colTitle.textContent = cat;
+            let colTitle = document.createElement('h5');
+            colTitle.textContent = cat.title;
             col.appendChild(colTitle);
 
-
-            amounts.forEach(function (amount) {
+            Object.entries(cat.questions).forEach(function ( [amount, question] ) {
+                console.log(question);
                 var card = document.createElement('div');
                 card.classList.add('card', 'acrylic', 'shadow', 'mb-3');
                 card.style.height = '20%';
@@ -144,6 +144,12 @@
                 cardTitle.classList.add('card-title');
                 cardTitle.textContent = amount;
                 cardBody.appendChild(cardTitle);
+
+                // add the question to the card as hidden
+                var cardText = document.createElement('p');
+                cardText.classList.add('card-text', 'd-none');
+                cardText.textContent = question;
+                cardBody.appendChild(cardText);
             });
         });
     });
@@ -165,8 +171,9 @@
                 const category = document.getElementById('category');
                 const question = document.getElementById('question');
 
-                category.textContent = `${card.parentElement.firstChild.textContent} for ${card.firstChild.textContent}`;
-                question.textContent = "question";
+                // kinda gross, but could be worse
+                category.textContent = `${card.parentElement.firstChild.textContent} for ${card.firstChild.childNodes[0].textContent}`;
+                question.textContent = card.firstChild.childNodes[1].textContent;
 
                 // remove card-title inner text; after we get the value
                 card.firstChild.textContent = '';
@@ -192,7 +199,7 @@
 
 <body class="" style="height: 100vh;">
     <div class="d-flex justify-content-center">
-        <h1 class="h1">{{ jepordy name }}</h1>
+        <h1 id="title" class="h1">{{ jepordy name }}</h1>
         <div class="m-3">
             <button onclick="downloadObjectAsJson()" class="shadow btn rounded btn-toggle border-0">
                 <img src="download-svgrepo-com.svg" alt="download" style="width: 2rem;">
