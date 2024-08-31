@@ -121,13 +121,18 @@
 
     // want to use a json file to store the data, but this is testable, and will happen either way
     var data = Game.template();
+    var flipped = false;
 
-    // add 5 cols to the table
-    document.addEventListener('DOMContentLoaded', function () {
+    function loadGame() {
+        flipped = false;
+
         const title = document.getElementById('title');
         title.textContent = data.title;
 
         var table = document.getElementById('table');
+        table.innerHTML = '';
+
+        // create the table
         data.categories.forEach(function (cat) {
             var col = document.createElement('div');
             col.classList.add('col', 'p-3', 'align-self-stretch');
@@ -159,12 +164,8 @@
                 cardBody.appendChild(cardText);
             });
         });
-    });
 
-    // when a card is clicked, add the active class
-    document.addEventListener('DOMContentLoaded', function () {
-        let flipped = false;
-
+        // add the click event to the cards
         var cards = document.querySelectorAll('.card');
         cards.forEach(function (card) {
             card.addEventListener('click', function () {
@@ -191,7 +192,15 @@
                 flipCard.style.transform = flipped ? 'rotateY(360deg)' : 'rotateY(0deg)';
             });
         });
+    }
 
+    // populate the table with the data
+    document.addEventListener('DOMContentLoaded', function () {
+        loadGame();
+    });
+
+    // when a card is clicked, add the active class
+    document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('fileInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -207,7 +216,7 @@
                     } catch (e) {
                         alert('Error parsing file:', e);
                     } finally {
-                        window.location.reload();
+                        loadGame();
                     }
                 };
                 
